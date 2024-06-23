@@ -17,4 +17,11 @@ export class UsersService {
     user.password = '';
     return user;
   }
+
+  async findOne(email: string): Promise<User | null> {
+    const user: User | null = await prisma.user.findUnique({
+      where: { email },
+    });
+    return user;
+  }
 }
