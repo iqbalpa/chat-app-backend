@@ -24,4 +24,10 @@ export class UsersService {
     });
     return user;
   }
+
+  async getAllIds(): Promise<number[]> {
+    const users: User[] = await prisma.user.findMany({});
+    const ids: number[] = users.map((user) => user.id);
+    return ids;
+  }
 }
