@@ -30,4 +30,13 @@ export class UsersService {
     const ids: number[] = users.map((user) => user.id);
     return ids;
   }
+
+  async getById(id: string): Promise<User | null> {
+    const idInt: number = parseInt(id);
+    const user: User = await prisma.user.findUnique({
+      where: { id: idInt },
+    });
+    user.password = '';
+    return user;
+  }
 }
