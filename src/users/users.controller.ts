@@ -16,8 +16,8 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  async getAllIds(): Promise<number[]> {
-    return this.usersService.getAllIds();
+  async getAllIds(): Promise<User[]> {
+    return this.usersService.getAll();
   }
 
   @UseGuards(AuthGuard)

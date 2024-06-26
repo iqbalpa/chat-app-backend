@@ -25,10 +25,12 @@ export class UsersService {
     return user;
   }
 
-  async getAllIds(): Promise<number[]> {
+  async getAll(): Promise<User[]> {
     const users: User[] = await prisma.user.findMany({});
-    const ids: number[] = users.map((user) => user.id);
-    return ids;
+    return users.map((user) => {
+      user.password = '';
+      return user;
+    });
   }
 
   async getById(id: string): Promise<User | null> {
