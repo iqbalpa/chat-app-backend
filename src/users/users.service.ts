@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Request } from '@nestjs/common';
 import { User } from '@prisma/client';
 import prisma from 'src/utils/prisma/prisma';
 import { CreateUserRequestDto } from './dto/create-user.dto';
@@ -38,5 +38,22 @@ export class UsersService {
     });
     user.password = '';
     return user;
+  }
+
+  // TODO: check whether the friend is existed or not
+  async addFriend(@Request() request, friendId: number) {
+    const user = request['user'];
+    await prisma.friend.create({
+      data: {
+        userId: user.user.id,
+        friendId: friendId,
+      },
+    });
+    await prisma.friend.create({
+      data: {
+        userId: friendId,
+        friendId: user.user.id,
+      },
+    });
   }
 }

@@ -1,4 +1,12 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  UseGuards,
+  Request,
+  Post,
+  Body,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from '@prisma/client';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -13,8 +21,14 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard)
-  @Get(":id")
+  @Get(':id')
   async getById(@Param('id') id: string): Promise<User | null> {
-    return this.usersService.getById(id)
+    return this.usersService.getById(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('friends')
+  async addFriend(@Request() request, @Body('friendId') friendId: number) {
+    return this.usersService.addFriend(request, friendId);
   }
 }

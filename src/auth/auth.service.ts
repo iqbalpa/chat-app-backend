@@ -22,7 +22,6 @@ export class AuthService {
   ): Promise<{ access_token: string }> {
     // user not found
     const user: User | null = await this.usersService.findOne(email);
-    console.log(user);
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -32,7 +31,6 @@ export class AuthService {
       password,
       user.password,
     );
-    console.log(isMatch);
     if (!isMatch) {
       throw new UnauthorizedException();
     }
@@ -40,9 +38,6 @@ export class AuthService {
     // jwt signing
     const payload = {
       user: user,
-      // id: user.id,
-      // name: user.name,
-      // email: user.email,
     };
     const token = await this.jwtService.signAsync(payload);
 
