@@ -36,6 +36,7 @@ export class AuthService {
     }
 
     // jwt signing
+    user.password = '';
     const payload = {
       user: user,
     };

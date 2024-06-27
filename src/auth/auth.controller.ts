@@ -25,7 +25,6 @@ export class AuthController {
   async signIn(
     @Body() dto: SignInRequestDto,
   ): Promise<{ access_token: string }> {
-    console.log(dto);
     return this.authService.signIn(dto.email, dto.password);
   }
 
