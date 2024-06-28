@@ -45,7 +45,7 @@ export class UsersService {
   async updateUser(@Request() request, name: string): Promise<User> {
     const user = request['user'];
     const updated = await prisma.user.update({
-      where: { email: user.user.email },
+      where: { email: user.email },
       data: { name: name },
     });
     updated.password = '';
