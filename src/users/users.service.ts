@@ -52,6 +52,15 @@ export class UsersService {
     return updated;
   }
 
+  async deleteUser(@Request() request): Promise<User> {
+    const user = request['user'];
+    const deleted = await prisma.user.delete({
+      where: { email: user.email },
+    });
+    deleted.password = '';
+    return deleted;
+  }
+
   // TODO: check whether the friend is existed or not
   async addFriend(@Request() request, friendId: number) {
     const user = request['user'];
