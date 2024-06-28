@@ -6,10 +6,12 @@ import {
   Request,
   Post,
   Body,
+  Patch,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from '@prisma/client';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { UpdateUserRequestDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -24,6 +26,15 @@ export class UsersController {
   @Get(':id')
   async getById(@Param('id') id: string): Promise<User | null> {
     return this.usersService.getById(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch()
+  async updateUser(
+    @Request() request,
+    @Body('name') name: string,
+  ): Promise<User> {
+    return this.usersService.updateUser(request, name);
   }
 
   @UseGuards(AuthGuard)
