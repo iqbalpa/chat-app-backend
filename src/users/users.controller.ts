@@ -8,19 +8,32 @@ import {
   Body,
   Patch,
   Delete,
+  Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from '@prisma/client';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { UpdateUserRequestDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
+  async getAllPagination(
+    @Query('skip', ParseIntPipe) skip: number,
+  ): Promise<User[]> {
+    return this.usersService.getAllPagination(skip, 9);
+  }
+
+  @Get()
   async getAll(): Promise<User[]> {
     return this.usersService.getAll();
+  }
+
+  @Get('/count')
+  async getUsersCount(): Promise<number> {
+    return this.usersService.getUsersCount();
   }
 
   @UseGuards(AuthGuard)

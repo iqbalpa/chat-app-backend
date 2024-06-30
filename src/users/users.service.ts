@@ -25,8 +25,24 @@ export class UsersService {
     return user;
   }
 
+  async getUsersCount(): Promise<number> {
+    const count: number = await prisma.user.count();
+    return count;
+  }
+
   async getAll(): Promise<User[]> {
     const users: User[] = await prisma.user.findMany({});
+    return users.map((user) => {
+      user.password = '';
+      return user;
+    });
+  }
+
+  async getAllPagination(skip: number, take: number): Promise<User[]> {
+    const users: User[] = await prisma.user.findMany({
+      skip,
+      take,
+    });
     return users.map((user) => {
       user.password = '';
       return user;
