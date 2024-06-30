@@ -8,6 +8,7 @@ import {
   Body,
   Patch,
   Delete,
+  Query,
   ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -19,15 +20,15 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  async getAll(): Promise<User[]> {
-    return this.usersService.getAll();
+  async getAllPagination(
+    @Query('skip', ParseIntPipe) skip: number,
+  ): Promise<User[]> {
+    return this.usersService.getAllPagination(skip, 9);
   }
 
   @Get()
-  async getAllPagination(
-    @Param('skip', ParseIntPipe) skip: number,
-  ): Promise<User[]> {
-    return this.usersService.getAllPagination(skip, 10);
+  async getAll(): Promise<User[]> {
+    return this.usersService.getAll();
   }
 
   @UseGuards(AuthGuard)
