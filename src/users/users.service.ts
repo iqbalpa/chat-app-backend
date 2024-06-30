@@ -33,6 +33,17 @@ export class UsersService {
     });
   }
 
+  async getAllPagination(skip: number, take: number): Promise<User[]> {
+    const users: User[] = await prisma.user.findMany({
+      skip,
+      take,
+    });
+    return users.map((user) => {
+      user.password = '';
+      return user;
+    });
+  }
+
   async getById(id: string): Promise<User | null> {
     const idInt: number = parseInt(id);
     const user: User = await prisma.user.findUnique({
