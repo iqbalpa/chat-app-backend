@@ -31,6 +31,11 @@ export class UsersController {
     return this.usersService.getAll();
   }
 
+  @Get('/count')
+  async getUsersCount(): Promise<number> {
+    return this.usersService.getUsersCount();
+  }
+
   @UseGuards(AuthGuard)
   @Get(':id')
   async getById(@Param('id') id: string): Promise<User | null> {
