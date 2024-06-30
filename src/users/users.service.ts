@@ -47,14 +47,14 @@ export class UsersService {
     const user = request['user'];
     await prisma.friend.create({
       data: {
-        userId: user.user.id,
+        userId: user.id,
         friendId: friendId,
       },
     });
     await prisma.friend.create({
       data: {
         userId: friendId,
-        friendId: user.user.id,
+        friendId: user.id,
       },
     });
   }
