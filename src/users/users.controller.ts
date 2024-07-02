@@ -4,7 +4,6 @@ import {
   Param,
   UseGuards,
   Request,
-  Post,
   Body,
   Patch,
   Delete,
@@ -55,11 +54,5 @@ export class UsersController {
   @Delete()
   async deleteUser(@Request() request): Promise<User> {
     return this.usersService.deleteUser(request);
-  }
-
-  @UseGuards(AuthGuard)
-  @Post('friends')
-  async addFriend(@Request() request, @Body('friendId') friendId: number) {
-    return this.usersService.addFriend(request, friendId);
   }
 }
