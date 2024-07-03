@@ -76,21 +76,4 @@ export class UsersService {
     deleted.password = '';
     return deleted;
   }
-
-  // TODO: check whether the friend is existed or not
-  async addFriend(@Request() request, friendId: number) {
-    const user = request['user'];
-    await prisma.friend.create({
-      data: {
-        userId: user.id,
-        friendId: friendId,
-      },
-    });
-    await prisma.friend.create({
-      data: {
-        userId: friendId,
-        friendId: user.id,
-      },
-    });
-  }
 }
