@@ -26,3 +26,9 @@ model Friend {
 
   @@unique([userId, friendId])
 }
+
+model Message {
+  id            Int      @default(autoincrement()) @id
+  userName      String
+  text          String
+}
