@@ -28,7 +28,9 @@ model Friend {
 }
 
 model Message {
-  id            Int      @default(autoincrement()) @id
+  id            Int           @default(autoincrement()) @id
   name          String
   text          String
+  roomId        String
+  date          DateTime      @default(now())
 }
