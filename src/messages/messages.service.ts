@@ -1,29 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMessageDto } from './dto/create-message.dto';
-import { Message } from './entities/message.entity';
+import { Message } from '@prisma/client';
+import prisma from 'src/utils/prisma/prisma';
 
 @Injectable()
 export class MessagesService {
-  messages: Message[] = [{ name: 'Iqbal', text: 'Hello, good morning all!' }];
-  clientToUser = {};
-
-  create(createMessageDto: CreateMessageDto): Message {
-    const message = { ...createMessageDto };
-    this.messages.push(message);
-    console.log('All messages:', this.messages); // Log all messages for debugging
+  async create(dto: CreateMessageDto): Promise<Message> {
+    const message: Message = await prisma.message.create({
+      data: dto,
+    });
+    console.log(message);
     return message;
   }
 
-  findAll(): Message[] {
-    return this.messages;
-  }
-
-  identify(name: string, clientId: string) {
-    this.clientToUser[clientId] = name;
-    return Object.values(this.clientToUser);
-  }
-
-  getClientName(cliendId: string) {
-    return this.clientToUser[cliendId];
+  async findAll(): Promise<Message[]> {
+    const messages: Message[] = await prisma.message.findMany({});
+    return messages;
   }
 }

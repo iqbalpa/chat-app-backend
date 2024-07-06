@@ -29,6 +29,6 @@ model Friend {
 
 model Message {
   id            Int      @default(autoincrement()) @id
-  userName      String
+  name          String
   text          String
 }

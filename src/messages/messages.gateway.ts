@@ -22,22 +22,14 @@ export class MessagesGateway {
 
   @SubscribeMessage('createMessage')
   async create(@MessageBody() createMessageDto: CreateMessageDto) {
-    const message = this.messagesService.create(createMessageDto);
+    const message = await this.messagesService.create(createMessageDto);
     console.log('Created message:', message); // Log the created message
     this.server.emit('message', message);
     return message;
   }
 
   @SubscribeMessage('findAllMessages')
-  findAll() {
+  async findAll() {
     return this.messagesService.findAll();
-  }
-
-  @SubscribeMessage('join')
-  joinRoom(
-    @MessageBody('name') payload: string,
-    @ConnectedSocket() client: Socket,
-  ) {
-    return this.messagesService.identify(payload, client.id);
   }
 }
