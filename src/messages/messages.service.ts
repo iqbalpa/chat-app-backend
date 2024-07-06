@@ -5,7 +5,9 @@ import prisma from 'src/utils/prisma/prisma';
 
 @Injectable()
 export class MessagesService {
-  async create(dto: CreateMessageDto): Promise<Message> {
+  async create(
+    dto: Omit<CreateMessageDto, 'roomId' | 'friendRoomId'>,
+  ): Promise<Message> {
     const message: Message = await prisma.message.create({
       data: dto,
     });

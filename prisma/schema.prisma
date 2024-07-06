@@ -31,4 +31,5 @@ model Message {
   id            Int      @default(autoincrement()) @id
   name          String
   text          String
+  room          String
 }

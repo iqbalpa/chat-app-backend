@@ -21,15 +21,27 @@ export class MessagesGateway {
   constructor(private readonly messagesService: MessagesService) {}
 
   @SubscribeMessage('createMessage')
-  async create(@MessageBody() createMessageDto: CreateMessageDto) {
-    const message = await this.messagesService.create(createMessageDto);
-    console.log('Created message:', message); // Log the created message
-    this.server.emit('message', message);
+  async create(@MessageBody() dto: CreateMessageDto) {
+    console.log(dto);
+    const message = await this.messagesService.create({
+      name: dto.name,
+      text: dto.text,
+    });
+    this.server.to(dto.roomId).to(dto.friendRoomId).emit('message', message);
     return message;
   }
 
   @SubscribeMessage('findAllMessages')
   async findAll() {
     return this.messagesService.findAll();
+  }
+
+  @SubscribeMessage('joinRoom')
+  async joinRoom(
+    @MessageBody('roomId') roomId: string,
+    @ConnectedSocket() client: Socket,
+  ) {
+    client.join(roomId);
+    console.log(`${client.id} joined room ${roomId}`);
   }
 }
