@@ -25,7 +25,7 @@ export class UsersController {
     return this.usersService.getAllPagination(skip, 9);
   }
 
-  @Get()
+  @Get('/all')
   async getAll(): Promise<User[]> {
     return this.usersService.getAll();
   }
