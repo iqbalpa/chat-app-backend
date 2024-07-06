@@ -22,10 +22,10 @@ export class MessagesGateway {
 
   @SubscribeMessage('createMessage')
   async create(@MessageBody() dto: CreateMessageDto) {
-    console.log(dto);
     const message = await this.messagesService.create({
       name: dto.name,
       text: dto.text,
+      roomId: dto.roomId,
     });
     this.server.to(dto.roomId).to(dto.friendRoomId).emit('message', message);
     return message;
