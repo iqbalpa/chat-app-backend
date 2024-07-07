@@ -7,6 +7,8 @@ interface User {
 }
 
 const users: User[] = [
+  { name: 'iqbal', email: 'iqbal@gmail.com', password: 'halohalo' },
+  { name: 'pahlevi', email: 'pahlevi@gmail.com', password: 'halohalo' },
   {
     name: 'Alice Johnson',
     email: 'alice.johnson@example.com',
