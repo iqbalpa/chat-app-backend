@@ -38,9 +38,7 @@ export class MessagesGateway {
 
   @SubscribeMessage('findHistoryMessages')
   async findHistoryByRoomId(@MessageBody('roomId') roomId: string) {
-    console.log(roomId);
     const messages = await this.messagesService.findHistoryByRoomId(roomId);
-    console.log(messages);
     this.server.emit('history', messages);
     return messages;
   }
@@ -50,8 +48,6 @@ export class MessagesGateway {
     @MessageBody('roomId') roomId: string,
     @ConnectedSocket() client: Socket,
   ) {
-    console.log(roomId);
     client.join(roomId);
-    console.log(`${client.id} joined room ${roomId}`);
   }
 }
