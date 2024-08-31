@@ -261,7 +261,7 @@ const users: User[] = [
 
 const seed = async (users: User[]) => {
   console.log('seeding data...');
-  for (let user of users) {
+  for (const user of users) {
     const hashedPass = await PasswordHelper.hash(user.password);
     await prisma.user.create({
       data: {

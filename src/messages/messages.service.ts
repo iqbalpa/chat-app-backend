@@ -30,7 +30,7 @@ export class MessagesService {
         roomId: friendRoomId,
       },
     });
-    let messages: Message[] = myRoomMessages.concat(friendRoomMessages);
+    const messages: Message[] = myRoomMessages.concat(friendRoomMessages);
     messages.sort((a, b) => a.date.getTime() - b.date.getTime());
     return messages;
   }
